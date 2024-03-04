@@ -1,0 +1,23 @@
+# Dockerfile for setting up Realsense driver
+#  https://github.com/jetsonhacks/installRealSenseSDK
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+
+RUN mkdir -p /tmp/geographicLib && \
+    cd /tmp/geographicLib && \
+    git clone https://github.com/geographiclib/geographiclib.git && \
+    cd geographiclib && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j4 && \
+    make install && \
+    rm -rf /tmp/geographicLib
+
+
+RUN apt update && \
+    apt install -y ros-${ROS_DISTRO}-robot-localization
+
+RUN apt update && \
+    apt install -y ros-${ROS_DISTRO}-rosbag*

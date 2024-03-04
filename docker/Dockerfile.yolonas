@@ -1,0 +1,11 @@
+# Dockerfile for setting up Realsense driver
+#  https://github.com/jetsonhacks/installRealSenseSDK
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+# install super gradients python
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install supergradients
